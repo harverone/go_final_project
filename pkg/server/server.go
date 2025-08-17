@@ -19,7 +19,7 @@ import (
 // 	return err == nil
 // }
 
-// выбираем порт, если нет или ошибка берем по умолчанию
+// load port from Env, use default if none or error
 func SetPort(name string) string {
 	err := godotenv.Load()
 	if err != nil {

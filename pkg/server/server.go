@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/harverone/go_final_project/pkg/utils"
 	"github.com/joho/godotenv"
 )
 
@@ -22,19 +23,19 @@ import (
 func SetPort(name string) string {
 	err := godotenv.Load()
 	if err != nil {
-		log.Printf("Отсутсвует переменная с указанным портом, будет изпользован порт по умолчанию :%s\n", Defaultport)
-		return fmt.Sprintf(":%s", Defaultport)
+		log.Printf("Отсутсвует переменная с указанным портом, будет изпользован порт по умолчанию :%s\n", utils.Defaultport)
+		return fmt.Sprintf(":%s", utils.Defaultport)
 	}
 
 	port := os.Getenv(name)
 
 	if len(port) < 1 {
-		log.Printf("Порт не указан, переменная пустая, будет изпользован порт по умолчанию :%s\n", Defaultport)
-		return fmt.Sprintf(":%s", Defaultport)
+		log.Printf("Порт не указан, переменная пустая, будет изпользован порт по умолчанию :%s\n", utils.Defaultport)
+		return fmt.Sprintf(":%s", utils.Defaultport)
 	}
-	if !IsInt(port) {
-		log.Printf("Порт указан не корректно, будет использован порт по умолчанию :%s", Defaultport)
-		return fmt.Sprintf(":%s", Defaultport)
+	if !utils.IsInt(port) {
+		log.Printf("Порт указан не корректно, будет использован порт по умолчанию :%s", utils.Defaultport)
+		return fmt.Sprintf(":%s", utils.Defaultport)
 	}
 
 	log.Printf("Указан порт :%s\n", port)
@@ -42,7 +43,7 @@ func SetPort(name string) string {
 }
 
 func StartServer() {
-	port := SetPort(EnvPort)
+	port := SetPort(utils.EnvPort)
 
 	fs := http.FileServer(http.Dir("./web"))
 	http.Handle("/", fs)

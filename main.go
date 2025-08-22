@@ -1,21 +1,21 @@
 package main
 
 import (
-	// "log"
+	"log"
 	// "net/http"
 
+	"github.com/harverone/go_final_project/pkg/db"
 	"github.com/harverone/go_final_project/pkg/server"
 )
 
 func main() {
 
-	// port := server.SetPort(server.EnvPort)
+	if err := db.Init(db.Dbpath); err != nil {
+		log.Fatalf("Ошибка подключения базы данных: %v", err)
+	}
+	defer db.Close()
 
-	// fs := http.FileServer(http.Dir("./web"))
-	// http.Handle("/", fs)
-
-	// log.Printf("Сервер запущен на порту %s\n", port)
-
-	// log.Fatal(http.ListenAndServe(port, nil))
-	server.StartServer()
+	if err := server.StartServer(); err != nil {
+		log.Fatalf("Ошибка сервера: %v", err)
+	}
 }

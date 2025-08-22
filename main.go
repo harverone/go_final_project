@@ -11,7 +11,7 @@ import (
 func main() {
 
 	if err := db.Init(db.Dbpath); err != nil {
-		log.Fatalf("Ошибка подключения базы данных: %v", err)
+		log.Fatalf("Ошибка подключения базы: %v", err)
 	}
 	defer db.Close()
 
